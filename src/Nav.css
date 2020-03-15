@@ -1,0 +1,30 @@
+.active>h2 {
+    background-color: orange;
+}
+
+h2:hover {
+    background-color: blue;
+    color: white;
+}
+
+.navLink {
+    border: 1px solid black;
+    border-right: none;
+    margin: 0px;
+    padding: 20px 60px;
+}
+
+#add {
+    border: 1px solid black;
+    margin: 8px;
+    padding: 20px 40px;
+}
+
+#navBar {
+    height: inherit;
+    border-right: 2px solid black;
+}
+
+#b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1 {
+    margin-top: 20px;
+}

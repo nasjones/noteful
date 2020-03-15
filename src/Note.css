@@ -1,0 +1,23 @@
+.list-item {
+    border: 2px solid black;
+    margin: 10px;
+    width: 90%;
+    text-align: left;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.title {
+    width: inherit;
+}
+
+.delete {
+    border: 2px solid black;
+    padding: 3px;
+    margin-left: auto;
+}
+
+.delete:hover {
+    cursor: pointer;
+}
