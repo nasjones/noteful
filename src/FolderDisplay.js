@@ -1,16 +1,28 @@
 import React from 'react';
-import dummyStore from './dummy-store'
 import NoteList from './NoteList'
-
+import Nav from './Nav'
+import NoteContext from './NoteContext'
 
 export default function FolderDisplay(props) {
-    let notes = dummyStore.notes.map(note => {
-        if (note.folderId === props.match.params.folderId)
-            return (note)
-        return;
-    })
 
     return (
-        <NoteList notes={notes} />
+        <NoteContext.Consumer>
+            {(value) => {
+                let notes = value.notes.map(note => {
+                    if (note.folderId === props.match.params.folderId)
+                        return (note)
+                    return null;
+                })
+                return (
+                    <div id="folderDisplay">
+                        <Nav
+                            folders={value.folders} />
+                        <NoteList notes={notes} />
+                    </div>
+                )
+            }
+            }
+        </NoteContext.Consumer>
+
     )
 }

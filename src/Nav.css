@@ -2,11 +2,6 @@
     background-color: orange;
 }
 
-h2:hover {
-    background-color: blue;
-    color: white;
-}
-
 .navLink {
     border: 1px solid black;
     border-right: none;
@@ -14,7 +9,12 @@ h2:hover {
     padding: 20px 60px;
 }
 
-#add {
+.navLink:hover {
+    background-color: blue;
+    color: white;
+}
+
+.add {
     border: 1px solid black;
     margin: 8px;
     padding: 20px 40px;

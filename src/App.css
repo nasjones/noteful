@@ -8,7 +8,7 @@
   margin: 80px;
 }
 
-#stage {
+#homepage, #noteDisplay, #folderDisplay {
   display: flex;
   height: inherit;
 }
@@ -20,4 +20,14 @@
 hr {
   border: 1px solid black;
   margin-bottom: 0px;
+}
+
+#stage {
+  height: inherit;
+}
+
+#back {
+  border: 1px solid black;
+  margin: 8px;
+  padding: 20px 40px;
 }
