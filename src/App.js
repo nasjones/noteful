@@ -73,20 +73,9 @@ class App extends Component {
         <NoteContext.Provider value={contextValue}>
           <main id="stage">
             <Switch>
-              <Route exact path='/'
-                component={Hompeage}
-                render={({ history }) => {
-                  console.log(history)
-                }} />
-              <Route path='/Folder/:folderId'
-                component={FolderDisplay}
-                render={({ history }) => {
-                  console.log(history)
-                }} />
-              <Route path='/note/:noteId' component={NoteDisplay}
-                render={({ history }) => {
-                  console.log(history)
-                }} />
+              <Route exact path='/' component={Hompeage} />
+              <Route path='/Folder/:folderId' component={FolderDisplay} />
+              <Route path='/note/:noteId' component={NoteDisplay} />
             </Switch>
 
           </main>
