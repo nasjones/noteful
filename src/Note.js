@@ -3,45 +3,59 @@ import './Note.css'
 import Moment from 'react-moment'
 import { Link } from 'react-router-dom'
 import NoteContext from './NoteContext'
-import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types'
+import Endpoint from './Endpoint'
 
-function Note(props) {
+export default function Note(props) {
     let date = <Moment format="Do of MMM YYYY">
         {props.mod}
     </Moment>
 
-    let del;
+    let handleClickDelete = (value) => {
+        const noteId = props.id
+        fetch(`${Endpoint.note_end}/${noteId}`, {
+            method: 'DELETE',
+            headers: {
+                'content-type': 'application/json'
+            },
+        })
+            .then(res => {
+                if (!res.ok)
+                    return res.json().then(e => Promise.reject(e))
+                return res.json()
+            })
+            .then(() => {
+                value.deleteNote(noteId)
+            })
+            .catch(error => {
+                console.error({ error })
+            })
 
+        if (props.history)
+            props.history.push('/')
+    }
 
     return (
         <NoteContext.Consumer>
             {(value) => {
-                if (props.bool) {
-                    del = () => {
-                        value.deleteNote(props.id)
-                        props.history.push('/')
-                    }
-                }
-                else {
-                    del = () => {
-                        value.deleteNote(props.id)
-                    }
-                }
                 return (
                     <div className="list-item">
                         <Link to={`/note/${props.id}`} className="title">
                             <h2>{props.name}</h2>
                         </Link>
                         <p>{"Date modified on "}{date}</p>
-                        <button className="delete" onClick={del}>Delete Note</button>
+                        <button className="delete" onClick={() => handleClickDelete(value)}>Delete Note</button>
                     </div>
                 )
             }
             }
         </NoteContext.Consumer>
-
     )
-
 }
 
-export default withRouter(Note)
+Note.propTypes = {
+    id: PropTypes.string,
+    name: PropTypes.string,
+    content: PropTypes.string,
+    mod: PropTypes.string,
+} 

@@ -1,13 +1,17 @@
 import React from 'react'
 import Note from './Note'
 import { Link } from 'react-router-dom'
+import NoteError from './NoteError'
+import PropTypes from 'prop-types'
 
-function NoteList(props) {
-
+export default function NoteList(props) {
     let output = props.notes.map(notes => {
         if (notes)
             return (
-                <Note id={notes.id} name={notes.name} content={notes.content} mod={notes.modified} key={notes.id} bool={false} />)
+                <NoteError key={notes.id}>
+                    <Note id={notes.id} name={notes.name} content={notes.content} mod={notes.modified} key={notes.id} bool={false} />
+                </NoteError>
+            )
         return null
     })
 
@@ -15,14 +19,22 @@ function NoteList(props) {
         <div id="main">
             {output}
             <div className="add">
-                <Link to={'/'} >
-                    Add  note
-            </Link>
+                <Link to={'/add-note'}  >
+                    <h2 className="addFolder">Add note</h2>
+                </Link>
             </div>
         </div>
     )
-
-
 }
 
-export default NoteList
+
+NoteList.propTypes = {
+    notes: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
+            modified: PropTypes.string.isRequired,
+            folderId: PropTypes.string.isRequired,
+            content: PropTypes.string.isRequired,
+        }))
+}

@@ -26,8 +26,17 @@ hr {
   height: inherit;
 }
 
+.displayed {
+  margin: 30px;
+  width: 90%;
+}
+
 #back {
   border: 1px solid black;
   margin: 8px;
   padding: 20px 40px;
+}
+
+.error {
+  color: red;
 }

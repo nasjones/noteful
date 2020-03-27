@@ -1,0 +1,32 @@
+#content-input {
+    height: 150px;
+    width: 200px;
+    font-size: medium;
+}
+
+#content-field {
+    padding: 10px;
+}
+
+#content-field * {
+    vertical-align: middle
+}
+
+#submit, #cancel {
+    border: 1px solid black;
+    margin: 8px;
+    padding: 20px 40px;
+    font-size: larger;
+}
+
+#submit:hover, #cancel:hover {
+    cursor: pointer;
+}
+
+#submit:hover {
+    background-color: rgb(107, 168, 107);
+}
+
+#cancel:hover {
+    background-color: rgb(212, 102, 102);
+}

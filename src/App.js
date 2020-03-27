@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 import { Route, Link, Switch } from 'react-router-dom';
-import Hompeage from './Homepage';
+import Homepage from './Homepage';
 import NoteDisplay from './NoteDisplay';
 import FolderDisplay from './FolderDisplay'
 import NoteContext from './NoteContext'
+import AddFolder from './AddFolder';
+import Endpoint from './Endpoint'
+import AddNote from './AddNote';
+
 
 class App extends Component {
 
@@ -14,9 +18,10 @@ class App extends Component {
   };
 
   componentDidMount() {
+
     Promise.all([
-      fetch('http://localhost:9090/notes'),
-      fetch('http://localhost:9090/folders')
+      fetch(Endpoint.note_end),
+      fetch(Endpoint.folder_end)
     ])
       .then(([notesRes, foldersRes]) => {
         if (!notesRes.ok)
@@ -34,17 +39,15 @@ class App extends Component {
       });
   }
 
-
-
   setFolders = folders => {
     this.setState({ folders })
   }
 
-  setNotes = notes => {
-    this.setState({ notes })
+  pageUpdate = () => {
+    this.componentDidMount()
   }
 
-  deleteNote = (noteId) => {
+  deleteNote = noteId => {
     this.setState({
       notes: this.state.notes.filter(note => note.id !== noteId)
     });
@@ -52,16 +55,15 @@ class App extends Component {
 
 
   render() {
-
     let contextValue = {
       notes: this.state.notes,
       folders: this.state.folders,
       deleteNote: this.deleteNote,
+      pageUpdate: this.pageUpdate,
     }
 
     return (
       <div className="App" >
-
         <header className="App-header">
           <Link to={'/'}>
             <h1 id="home-link">
@@ -73,9 +75,11 @@ class App extends Component {
         <NoteContext.Provider value={contextValue}>
           <main id="stage">
             <Switch>
-              <Route exact path='/' component={Hompeage} />
+              <Route exact path='/' component={Homepage} />
               <Route path='/Folder/:folderId' component={FolderDisplay} />
               <Route path='/note/:noteId' component={NoteDisplay} />
+              <Route path='/add-folder' component={AddFolder} />
+              <Route path='/add-note' component={AddNote} />
             </Switch>
 
           </main>

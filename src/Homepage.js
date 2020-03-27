@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom';
 import NoteList from './NoteList'
 import Nav from './Nav'
 import NoteContext from './NoteContext'
 
 
-export default withRouter(class Hompeage extends Component {
+export default class Homepage extends Component {
 
     render() {
         return (
@@ -23,4 +22,4 @@ export default withRouter(class Hompeage extends Component {
             </NoteContext.Consumer >
         )
     }
-})
+}
