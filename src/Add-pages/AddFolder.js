@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import Endpoint from './Endpoint'
-import NoteContext from './NoteContext'
+import config from '../config'
+import NoteContext from '../NoteHandle/NoteContext'
 import './AddFolder.css'
-import ValidationError from './ValidationError'
+import ValidationError from '../ValidationError'
 
 export default class AddFolder extends Component {
     state = {
-        id: "",
         name: "",
         touched: false,
     }
@@ -21,10 +20,9 @@ export default class AddFolder extends Component {
     folderPost = (e, value) => {
         e.preventDefault()
         let newFolder = {
-            id: this.state.id,
             name: this.state.name,
         }
-        fetch(`${Endpoint.folder_end}`, {
+        fetch(`${config.folder_end}`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -60,25 +58,6 @@ export default class AddFolder extends Component {
 
     }
 
-    IdMaker = () => {
-        let output = Math.random().toString(36).substr(2, 17)
-        this.setState({ id: output })
-    }
-
-    dupCheck = (folders) => {
-        for (let i = 0; i < folders.length; i++) {
-            if (this.state.id === folders[i].id) {
-                this.IdMaker()
-                i = 0
-            }
-        }
-
-    }
-
-    componentDidMount() {
-        this.IdMaker()
-    }
-
     render() {
 
         return (
@@ -86,11 +65,9 @@ export default class AddFolder extends Component {
                 {(value) => {
 
                     const nameError = this.validateName(value.folders)
-                    this.dupCheck(value.folders)
                     return (
                         <form>
                             <h2>Add a new folder</h2>
-                            <label>Folder Id: </label><b>{this.state.id}</b>
                             <br />
                             <label htmlFor="title">Folder Name: </label>
                             <input name="title" id="title-input" onChange={e => this.textChange(e.target.value)} />

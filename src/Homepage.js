@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import NoteList from './NoteList'
+import NoteList from './NoteHandle/NoteList'
 import Nav from './Nav'
-import NoteContext from './NoteContext'
+import NoteContext from './NoteHandle/NoteContext'
 
 
 export default class Homepage extends Component {

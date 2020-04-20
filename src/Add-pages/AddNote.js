@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import Endpoint from './Endpoint'
-import NoteContext from './NoteContext'
-import ValidationError from './ValidationError'
+import config from '../config'
+import NoteContext from '../NoteHandle/NoteContext'
+import ValidationError from '../ValidationError'
 
 export default class AddNote extends Component {
     state = {
         id: "",
         name: "",
-        folderId: "",
+        folder_id: null,
         content: "",
         nameTouched: false,
         selectTouched: false,
@@ -23,7 +23,7 @@ export default class AddNote extends Component {
 
     selectChange = (val) => {
         this.setState({
-            folderId: val,
+            folder_id: parseInt(val),
             selectTouched: true
         })
     }
@@ -42,11 +42,11 @@ export default class AddNote extends Component {
             id: this.state.id,
             name: this.state.name,
             modified: current,
-            folderId: this.state.folderId,
+            folder_id: this.state.folder_id,
             content: this.state.content,
         }
 
-        fetch(`${Endpoint.note_end}`, {
+        fetch(`${config.note_end}`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -81,8 +81,8 @@ export default class AddNote extends Component {
     }
 
     validateSelect = () => {
-        const folderSelect = this.state.folderId.trim()
-        if (folderSelect.length === 0)
+        const folderSelect = this.state.folder_id
+        if (folderSelect === null)
             return "A folder selection is required."
     }
 
@@ -92,24 +92,6 @@ export default class AddNote extends Component {
             return "The note must have content."
         else if (content.length < 5)
             return "Content must be atleast five characters long."
-    }
-
-    IdMaker = () => {
-        let output = Math.random().toString(36).substr(2, 22)
-        this.setState({ id: output })
-    }
-
-    dupCheck = (notes) => {
-        for (let i = 0; i < notes.length; i++) {
-            if (this.state.id === notes[i].id) {
-                this.IdMaker()
-                i = 0
-            }
-        }
-    }
-
-    componentDidMount() {
-        this.IdMaker()
     }
 
     render() {
@@ -124,11 +106,9 @@ export default class AddNote extends Component {
                     const nameError = this.validateName(value.notes)
                     const selectError = this.validateSelect()
                     const contentError = this.validateContent()
-                    this.dupCheck(value.notes)
                     return (
                         <form>
                             <h2>Add a new note</h2>
-                            <label>Note Id: </label><b>{this.state.id}</b>
                             <br />
                             <label htmlFor="title">Note Name: </label>
                             <input name="title" id="title-input" onChange={e => this.nameChange(e.target.value)} />

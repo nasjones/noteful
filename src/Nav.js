@@ -4,6 +4,7 @@ import './Nav.css'
 import PropTypes from 'prop-types'
 
 export default function Nav(props) {
+    console.log(props)
     let output = props.folders.map(folds =>
         <NavLink exact key={folds.id} to={`/folder/${folds.id}`}>
             <h2 id={folds.id} className="navLink">{folds.name}</h2>
@@ -22,7 +23,7 @@ export default function Nav(props) {
 
 Nav.propTypes = {
     folders: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
     }))
 }

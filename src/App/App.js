@@ -1,14 +1,15 @@
+
 import React, { Component } from 'react';
 import './App.css';
 import { Route, Link, Switch } from 'react-router-dom';
-import Homepage from './Homepage';
-import NoteDisplay from './NoteDisplay';
-import FolderDisplay from './FolderDisplay'
-import NoteContext from './NoteContext'
-import AddFolder from './AddFolder';
-import Endpoint from './Endpoint'
-import AddNote from './AddNote';
-
+import Homepage from '../Homepage';
+import NoteDisplay from '../NoteHandle/NoteDisplay';
+import FolderDisplay from '../FolderDisplay'
+import NoteContext from '../NoteHandle/NoteContext'
+import AddFolder from '../Add-pages/AddFolder';
+import config from '../config'
+import AddNote from '../Add-pages/AddNote';
+require('dotenv').config()
 
 class App extends Component {
 
@@ -18,11 +19,15 @@ class App extends Component {
   };
 
   componentDidMount() {
-
     Promise.all([
-      fetch(Endpoint.note_end),
-      fetch(Endpoint.folder_end)
-    ])
+      fetch(config.note_end),
+      fetch(config.folder_end)
+    ], {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+      }
+    })
       .then(([notesRes, foldersRes]) => {
         if (!notesRes.ok)
           return notesRes.json().then(e => Promise.reject(e));
@@ -32,6 +37,7 @@ class App extends Component {
         return Promise.all([notesRes.json(), foldersRes.json()]);
       })
       .then(([notes, folders]) => {
+        console.log(folders)
         this.setState({ notes, folders });
       })
       .catch(error => {
@@ -55,12 +61,13 @@ class App extends Component {
 
 
   render() {
-    let contextValue = {
+    const contextValue = {
       notes: this.state.notes,
       folders: this.state.folders,
       deleteNote: this.deleteNote,
       pageUpdate: this.pageUpdate,
     }
+
 
     return (
       <div className="App" >

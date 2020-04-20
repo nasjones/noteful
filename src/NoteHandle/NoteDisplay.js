@@ -8,14 +8,16 @@ export default class NoteDisplay extends Component {
     render() {
         return (
             <NoteContext.Consumer>
+
                 {(value) => {
                     const output = value.notes.find(note =>
-                        note.id === this.props.match.params.noteId
+                        note.id === parseInt(this.props.match.params.noteId)
                     )
 
                     const folder = value.folders.find(folder =>
-                        folder.id === output.folderId
+                        folder.id === output.folder_id
                     )
+
                     return (
                         <div id="noteDisplay">
                             <div id="navBar">

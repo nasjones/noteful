@@ -31,10 +31,10 @@ export default function NoteList(props) {
 NoteList.propTypes = {
     notes: PropTypes.arrayOf(
         PropTypes.shape({
-            id: PropTypes.string.isRequired,
+            id: PropTypes.number.isRequired,
             name: PropTypes.string.isRequired,
             modified: PropTypes.string.isRequired,
-            folderId: PropTypes.string.isRequired,
+            folder_id: PropTypes.number.isRequired,
             content: PropTypes.string.isRequired,
         }))
 }
